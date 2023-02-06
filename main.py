@@ -12,6 +12,11 @@ from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton
 from PyQt5.QtWidgets import QMainWindow, QLabel
 
+
+'''
+author: amedix2
+'''
+
 bot = Bot(token='5937626790:AAGLqO3_UbPa9I144s7sBp28Ddi7ymcG4NI')
 dp = Dispatcher(bot)
 
@@ -108,8 +113,7 @@ class connection(QWidget):
 
     def update(self):
         self.us.setText(f'Подключенный пользователь\n{USER_NAME}')
-        if USER_NAME is not None:
-                self.ab.setText('Теперь вы можете свернуть приложение и открыть PowerPoint\n'
+        self.ab.setText('Теперь вы можете свернуть приложение и открыть PowerPoint\n'
                                 'Для остановки сессии закройте это окно\n\nПриятного использования!')
         
     def closeEvent(self, event):
