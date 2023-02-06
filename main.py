@@ -104,7 +104,7 @@ class connection(QWidget):
         self.ab = QLabel(self)
         self.ab.setFont(QFont("Times", 8, QFont.Cursive))
         self.ab.setText('Отсканируйсте QR-код с помощью камеры на вашем смартфоне\n или самостоятельно найдите @remoteamedixbot в Telegram.\n\n'
-                        'Далее, отправте боту код, который вы видете на экране.')
+                        'Далее, отправте боту код, который вы видите на экране.')
         self.ab.resize(500, 100)
         self.ab.move(50, 190)
         self.ab.setAlignment(Qt.AlignCenter)
