@@ -18,6 +18,7 @@ dp = Dispatcher(bot)
 REG_FLAG = True
 USER_ID = 0
 USER_NAME = None
+SELFOBJ = None
 
 
 def GUI():
@@ -70,13 +71,14 @@ class main_window(QMainWindow):
 
 
 class connection(QWidget):
-    global room, REG_FLAG, USER_ID, USER_NAME
+    global room, REG_FLAG, USER_ID, USER_NAME, SELFOBJ
 
     def __init__(self, *a):
         super().__init__()
         self.initUI()
 
     def initUI(self):
+        global SELFOBJ
         self.setGeometry(470, 150, 600, 300)
         self.setWindowTitle('Connection')
 
@@ -96,20 +98,20 @@ class connection(QWidget):
 
         self.ab = QLabel(self)
         self.ab.setFont(QFont("Times", 8, QFont.Cursive))
-        self.ab.setText('Если имя пользователя не отобразилось автоматически,\n нажмите любую клавишу, '
-                        'чтобы обновить его')
+        self.ab.setText('Отсканируйсте QR-код с помощью камеры на вашем смартфоне\n или самостоятельно найдите @remoteamedixbot в Telegram.\n\n'
+                        'Далее, отправте боту код, который вы видете на экране.')
         self.ab.resize(500, 100)
         self.ab.move(50, 190)
         self.ab.setAlignment(Qt.AlignCenter)
 
-    def keyPressEvent(self, event):
-        if event.key():
-            self.us.setText(f'Подключенный пользователь\n{USER_NAME}')
-            print(self)
-            if USER_NAME is not None:
+        SELFOBJ = self
+
+    def update(self):
+        self.us.setText(f'Подключенный пользователь\n{USER_NAME}')
+        if USER_NAME is not None:
                 self.ab.setText('Теперь вы можете свернуть приложение и открыть PowerPoint\n'
                                 'Для остановки сессии закройте это окно\n\nПриятного использования!')
-
+        
     def closeEvent(self, event):
         global USER_ID, USER_NAME, REG_FLAG, room
         room = room_id()
@@ -119,6 +121,7 @@ class connection(QWidget):
         REG_FLAG = True
         self.rl.setText(room)
         self.us.setText(f'Подключенный пользователь\n{USER_NAME}')
+    
 
 
 class qr(QWidget):
@@ -165,7 +168,7 @@ def main_bot(dp):
 
     @dp.message_handler(content_types=['text'])
     async def main(message: types.Message):
-        global USER_ID, USER_NAME, REG_FLAG, room
+        global USER_ID, USER_NAME, REG_FLAG, room, SELFOBJ
 
         btn_l = KeyboardButton('<<<')
         btn_r = KeyboardButton('>>>')
@@ -186,8 +189,8 @@ def main_bot(dp):
                 USER_ID = message.from_user.id
                 USER_NAME = message.from_user.username
                 REG_FLAG = False
-                time.sleep(0.1)
-                keyboard.send('ctrl')
+                
+                connection.update(SELFOBJ)
             else:
                 await bot.send_message(message.from_user.id, "Ошибка авторизации")
         else:
