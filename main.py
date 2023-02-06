@@ -1,6 +1,7 @@
 import keyboard
 import random
 import sys
+import os
 import threading
 import time
 from aiogram import Bot, types
@@ -64,8 +65,7 @@ class main_window(QMainWindow):
         self.win1.show()
 
     def qr(self):
-        self.win2 = qr(self)
-        self.win2.show()
+        os.system('start qr-code.png')
 
     def fb(self):
         self.win3 = feedback(self)
@@ -97,16 +97,16 @@ class connection(QWidget):
         self.us = QLabel(self)
         self.us.setFont(QFont("Times", 20, QFont.Bold))
         self.us.setText(f'Подключенный пользователь\n{USER_NAME}')
-        self.us.resize(500, 100)
-        self.us.move(50, 120)
+        self.us.resize(600, 100)
+        self.us.move(0, 120)
         self.us.setAlignment(Qt.AlignCenter)
 
         self.ab = QLabel(self)
         self.ab.setFont(QFont("Times", 8, QFont.Cursive))
         self.ab.setText('Отсканируйсте QR-код с помощью камеры на вашем смартфоне\n или самостоятельно найдите @remoteamedixbot в Telegram.\n\n'
                         'Далее, отправте боту код, который вы видите на экране.')
-        self.ab.resize(500, 100)
-        self.ab.move(50, 190)
+        self.ab.resize(600, 100)
+        self.ab.move(0, 190)
         self.ab.setAlignment(Qt.AlignCenter)
 
         SELFOBJ = self
@@ -125,21 +125,6 @@ class connection(QWidget):
         REG_FLAG = True
         self.rl.setText(room)
         self.us.setText(f'Подключенный пользователь\n{USER_NAME}')
-    
-
-
-class qr(QWidget):
-    def __init__(self, *a):
-        super().__init__()
-        self.initUI()
-
-    def initUI(self):
-        self.setGeometry(150, 500, 370, 370)
-        self.setWindowTitle('QR-code')
-
-        self.stdImg = QPixmap('qr-code.png')
-        self.image = QLabel(self)
-        self.image.setPixmap(self.stdImg)
 
 
 class feedback(QWidget):
@@ -148,14 +133,14 @@ class feedback(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.setGeometry(540, 500, 530, 370)
+        self.setGeometry(1090, 150, 530, 300)
         self.setWindowTitle('Feedback')
 
         self.us = QLabel(self)
         self.us.setFont(QFont("Times", 30, QFont.Bold))
-        self.us.setText(f'amedix2@gmail.com\n\nt.me/amedix2\n\nvk.com/amedix')
-        self.us.resize(500, 370)
-        self.us.move(15, 0)
+        self.us.setText(f'amedix2@gmail.com\nt.me/amedix2\nvk.com/amedix')
+        self.us.resize(530, 300)
+        self.us.move(0, 0)
         self.us.setAlignment(Qt.AlignCenter)
 
 
